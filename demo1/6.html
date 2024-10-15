@@ -17,8 +17,8 @@
         position: absolute;
         left: 50%;
         top: 50%;
-        transform: translate(-50%, -50%);
         overflow: hidden;
+        margin: -180px 0 0 -320px;
       }
       .myVideo {
         width: 640px;
@@ -197,8 +197,28 @@
       var currentLine_whiteLine = document.getElementsByClassName(
         "currentLine_whiteLine"
       )[0];
+      var currentLine = document.getElementsByClassName("currentLine")[0];
+
+      // 最外层元素
+      var myVideoContent = document.getElementsByClassName("myVideoContent")[0];
 
       var lastVol = 1;
+
+      // 点击进度条
+      currentLine.onclick = function () {
+        console.log("myVideoContent.offsetLeft", myVideoContent.offsetLeft);
+        console.log("aa", event.clientX);
+        var needL =
+          event.clientX -
+          myVideoContent.offsetLeft -
+          currentLine_whiteLine.offsetLeft;
+        var percent = needL / currentLine.offsetWidth;
+        myVideo.currentTime = percent * myVideo.duration;
+        console.log("needL", needL);
+        console.log("percent", percent);
+        myVideo.currentTime = percent * myVideo.duration;
+        currentLine_whiteLine.style.width = percent * 100 + "%";
+      };
 
       lineBall.onmousedown = function () {
         var disX = event.clientX - this.offsetLeft;
@@ -248,8 +268,6 @@
 
       // 拖拽声音按钮
       volball.onmousedown = function () {
-        console.log("event", event);
-        console.log("this", this.offsetLeft);
         var disX = event.clientX - this.offsetLeft;
         var vol = 0;
         document.onmousemove = function () {
