@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <video class="myVideo" src="/video/1.mp4" width="500" height="500"></video>
+    <br />
+    <button class="btnPlay">播放</button>
+    <button class="btnPause">暂停</button>
+    <input value="100" type="range" class="rangeVolume" />
+    <br />
+    <input type="range" style="width: 500px" value="0" class="rangeProcess" />
+    <script>
+      var myVideo = document.querySelector(".myVideo");
+      var btnPlay = document.querySelector(".btnPlay");
+      var btnPause = document.querySelector(".btnPause");
+      var rangeVolume = document.querySelector(".rangeVolume");
+      var rangeProcess = document.querySelector(".rangeProcess");
+      btnPlay.onclick = function () {
+        myVideo.play();
+      };
+      btnPause.onclick = function () {
+        myVideo.pause();
+      };
+      rangeVolume.oninput = function () {
+        console.log("rangeVolume.value", rangeVolume.value);
+        myVideo.volume = rangeVolume.value / 100;
+      };
+
+      // 监听播放结束
+      myVideo.onended = function () {
+        console.log("播放结束");
+      };
+      // 监听播放状态 timeupdate
+      myVideo.ontimeupdate = function () {
+        console.log("当前播放时间", myVideo.currentTime);
+        console.log("总时间", myVideo.duration);
+        rangeProcess.value = (myVideo.currentTime / myVideo.duration) * 100;
+      };
+    </script>
+  </body>
+</html>

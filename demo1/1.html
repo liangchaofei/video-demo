@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h3>单独使用<video src=""></video></h3>
+    <video src="/video/1.mp4" controls></video>
+    <h3>使用source</h3>
+    <video controls>
+        <source src="/video/1.mp4"></source>
+     </video>
+     <h3>video属性</h3>
+    <video
+      src="/video/1.mp4"
+      controls
+      loop
+      muted
+      width="500"
+      height="500"
+      poster="/imgs/1.png"
+      autoplay
+    ></video>
+  </body>
+</html>

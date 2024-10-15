@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>布局</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .myVideoContent {
+        width: 640px;
+        height: 360px;
+        border: 1px solid #000;
+        box-shadow: 0 0 10px #000;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        overflow: hidden;
+      }
+      .myVideo {
+        width: 640px;
+        height: 360px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 1;
+      }
+      .myVideoContent .videoControls {
+        width: 100%;
+        height: 40px;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        z-index: 3;
+        background: rgba(0, 0, 0, 0.5);
+      }
+      .myVideoContent .mask {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 2;
+        background: rgba(0, 0, 0, 0.2);
+        transition: 0.2s;
+      }
+      .myVideoContent .mask.scale {
+        transform: scale(2);
+
+        opacity: 0;
+      }
+      .myVideoContent .mask .maskCenterBtn {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        background: url(/imgs/play.png) no-repeat center center;
+        cursor: pointer;
+      }
+      .myVideoContent .videoControls .playNode {
+        width: 30px;
+        height: 30px;
+        margin: 6px 0 0 17px;
+        background: url(/imgs/play.png) no-repeat left center;
+        cursor: pointer;
+        float: left;
+      }
+      .myVideoContent .videoControls .playNode.pause {
+        background-image: url(/imgs/pause.png);
+      }
+
+      .myVideoContent .videoControls .fullScreen {
+        float: right;
+        width: 30px;
+        height: 30px;
+        margin-top: 5px;
+        margin-right: 15px;
+        background: url(/imgs/full.png);
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="myVideoContent">
+      <video src="/video/1.mp4" class="myVideo"></video>
+      <div class="mask">
+        <div class="maskCenterBtn"></div>
+      </div>
+      <div class="videoControls">
+        <div class="playNode"></div>
+        <div class="fullScreen"></div>
+      </div>
+    </div>
+    <script>
+      var myVideo = document.getElementsByClassName("myVideo")[0];
+      var maskCenterBtn = document.getElementsByClassName("maskCenterBtn")[0];
+      var playNode = document.getElementsByClassName("playNode")[0];
+      var videoControls = document.getElementsByClassName("videoControls")[0];
+      var mask = document.getElementsByClassName("mask")[0];
+
+      var fullScreen = document.getElementsByClassName("fullScreen")[0];
+
+      // 开关视频
+
+      function playVideo() {
+        mask.classList.add("scale");
+        playNode.classList.add("pause");
+        myVideo.play();
+      }
+      function pauseVideo() {
+        mask.classList.remove("scale");
+        playNode.classList.remove("pause");
+        myVideo.pause();
+      }
+      maskCenterBtn.onclick = function () {
+        if (mask.classList.contains("scale")) {
+          pauseVideo();
+        } else {
+          playVideo();
+        }
+      };
+      playNode.onclick = function () {
+        if (playNode.classList.contains("pause")) {
+          pauseVideo();
+        } else {
+          playVideo();
+        }
+      };
+
+      // 全屏
+      fullScreen.onclick = function () {
+        if (myVideo.mozaRequestFullScreen) {
+          myVideo.mozaRequestFullScreen();
+        } else if (myVideo.webkitRequestFullScreen) {
+          myVideo.webkitRequestFullScreen();
+        } else if (myVideo.msRequestFullscreen) {
+          myVideo.msRequestFullscreen();
+        } else {
+          myVideo.requestFullscreen();
+        }
+      };
+    </script>
+  </body>
+</html>
